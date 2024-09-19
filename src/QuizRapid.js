@@ -4,6 +4,7 @@ import YAML from 'yaml'
 import { Kafka } from 'kafkajs'
 
 /**
+ * 
  * @param {string} lagnavn
  * @param {string[]} ignorerteKategorier
  * @param {string} topic
@@ -35,16 +36,45 @@ export class QuizRapid {
                 console.error(`Error i hentingen og behandlingen av leesah sertifikat: ${e}`)
             }
 
-            this.running = true
             this.lagnavn = lagnavn
             this.consumer = await kafka.consumer({ groupId: consumerGroupId }).connect().subscribe({ topic, fromBeginning: true })
             this.producer = await kafka.producer().connect()
             this.ignorerteKategorier = ignorerteKategorier
 
+            this.running = true
 
             console.log("🔍 Ser etter første spørsmål")
 
             return this
+
         })()
     }
+
+    // TODO: skal dette være en egen metode, kafkajs har jo allerede et "runtime" for å hente alle meldinger
+    async hentSpørsmål() {
+        while (this.running) {
+
+        }
+    }
+
+    /**
+     * 
+     * @param {string} svar 
+     */
+    async publiserSvar(svar) {
+
+    }
+
+    async avslutt() {
+        console.log("🛑 Stenger ned...")
+
+        await this.producer.disconnect()
+        await this.consumer.disconnect()
+
+        self.running = false
+    }
+
+    #håndterMelding(melding) { }
+
+    #håndterError(melding) { }
 }
