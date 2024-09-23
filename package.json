@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/navikt/leesah-game-javascript#readme",
   "dependencies": {
+    "date-fns": "^4.1.0",
     "kafkajs": "^2.2.4",
     "uuid": "^10.0.0",
     "yaml": "^2.5.1"
