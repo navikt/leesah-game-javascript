@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import fs from "fs"
 import YAML from 'yaml'
 import { Kafka } from 'kafkajs'
-import { format, formatISO } from 'date-fns'
+import { format, } from 'date-fns'
 
 let producer
 let teamnavn
