@@ -71,6 +71,7 @@ async function kjør() {
                 if (hendelse.value) {
                     const spørsmål = spørsmålFraHendelse(JSON.parse(hendelse.value?.toString()))
                     if (spørsmål) {
+                        // ### FRA HER SPILLES LEESAH! ###
                         if (spørsmål.kategorinavn === 'team-registration') {
                             await publiserSvar(spørsmål, HEXKODE)
                         } else if (spørsmål.kategorinavn === 'ping-pong') {
