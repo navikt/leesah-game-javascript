@@ -57,29 +57,27 @@ Opprett filen `index.mjs` og lim inn koden nedenfor. OBS: husk at filtypen må v
 
 import { lastKafka, publiserSvar, spørsmålFraHendelse } from "@navikt/leesah-game";
 
+const ignorerteKategorier = [
+    // "team-registration"
+]
+
 const LAGNAVN = "BYTT MEG";
 const HEXKODE = "BYTT MEG";
 
 async function kjør() {
     try {
-        const { consumer } = await lastKafka(LAGNAVN, [
-            //"team-registration"
-        ])
+        const { consumer } = await lastKafka(LAGNAVN, ignorerteKategorier)
 
         await consumer.run({
             eachMessage: async ({ message: hendelse }) => {
-                if (hendelse.value) {
-                    const spørsmål = spørsmålFraHendelse(JSON.parse(hendelse.value?.toString()))
-                    if (spørsmål) {
-                        // ### FRA HER SPILLES LEESAH! ###
-                        if (spørsmål.kategorinavn === 'team-registration') {
-                            await publiserSvar(spørsmål, HEXKODE)
-                        } else if (spørsmål.kategorinavn === 'ping-pong') {
-                            // Fortsett spillet nedover
-                        }
+                const spørsmål = spørsmålFraHendelse(JSON.parse(hendelse.value?.toString()))
+                if (spørsmål) {
+                    // ### FRA HER SPILLES LEESAH! ###
+                    if (spørsmål.kategorinavn === 'team-registration') {
+                        await publiserSvar(spørsmål, HEXKODE)
+                    } else if (spørsmål.kategorinavn === 'ping-pong') {
+                        // Fortsett spillet nedover
                     }
-                } else {
-                    console.error('Hendelse har ingen verdi')
                 }
             }
         })

@@ -46,17 +46,20 @@ export const lastKafka = async (lagnavn, ignorerteKategorier) => {
 }
 
 export const spørsmålFraHendelse = (hendelse) => {
-    if (hendelse['@event_name'] === 'SPØRSMÅL') {
+    if (hendelse.value && hendelse['@event_name'] === 'SPØRSMÅL') {
+
+        const parsetHendelse = JSON.parse(hendelse.value?.toString())
+
         const spm = {
-            type: hendelse['@event_name'],
-            kategorinavn: hendelse.kategorinavn,
-            spørsmål: hendelse.spørsmål,
-            svarformat: hendelse.svarformat,
-            dokumentasjon: hendelse.dokumentasjon,
-            spørsmålId: hendelse.spørsmålId,
+            type: parsetHendelse['@event_name'],
+            kategorinavn: parsetHendelse.kategorinavn,
+            spørsmål: parsetHendelse.spørsmål,
+            svarformat: parsetHendelse.svarformat,
+            dokumentasjon: parsetHendelse.dokumentasjon,
+            spørsmålId: parsetHendelse.spørsmålId,
         }
 
-        if (!ignorerteKatoerierListe.includes(hendelse.kategorinavn)) console.log(`📥 Mottok spørsmål: ${JSON.stringify(spm)}`)
+        if (!ignorerteKatoerierListe.includes(spm.kategorinavn)) console.log(`📥 Mottok spørsmål: ${JSON.stringify(spm)}`)
 
         return spm
     } else {
