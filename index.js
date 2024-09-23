@@ -27,7 +27,7 @@ export const lastKafka = async (lagnavn, ignorerteKategorier) => {
             }
         })
 
-        topic = leesahCertsSomJSON?.topics[1];
+        topic = leesahCertsSomJSON?.topics[0];
 
         const consumer = kafka.consumer({ groupId: uuidv4() })
         await consumer.connect()
