@@ -70,7 +70,7 @@ async function kjør() {
 
         await consumer.run({
             eachMessage: async ({ message: hendelse }) => {
-                const spørsmål = spørsmålFraHendelse(JSON.parse(hendelse.value?.toString()))
+                const spørsmål = spørsmålFraHendelse(hendelse)
                 if (spørsmål) {
                     // ### FRA HER SPILLES LEESAH! ###
                     if (spørsmål.kategorinavn === 'team-registration') {
