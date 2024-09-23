@@ -8,7 +8,9 @@ let producer
 let teamnavn
 let topic
 
-export const lastKafka = async (lagnavn) => {
+let ignorerteKatoerierListe = []
+
+export const lastKafka = async (lagnavn, ignorerteKategorier) => {
     console.log("🚀 Starter opp...")
 
     try {
@@ -35,40 +37,51 @@ export const lastKafka = async (lagnavn) => {
         await producer.connect();
 
         teamnavn = lagnavn
+        ignorerteKatoerierListe = [...ignorerteKategorier]
 
         return { consumer };
-
     } catch (e) {
         console.error(`Feil i lastingen av kafka: ${e}`)
     }
 }
 
-
-// TODO, denne må vel kanskje hete noe smartere
 export const spørsmålFraHendelse = (hendelse) => {
-    return hendelse['@event_name'] === 'SPØRSMÅL' ? {
-        type: hendelse['@event_name'],
-        spørsmålId: hendelse.spørsmålId,
-        spørsmål: hendelse.spørsmål,
-        kategorinavn: hendelse.kategorinavn,
-        svarformat: hendelse.svarformat,
-        dokumentasjon: hendelse.dokumentasjon
-    } : undefined
+    if (hendelse['@event_name'] === 'SPØRSMÅL') {
+        const spm = {
+            type: hendelse['@event_name'],
+            kategorinavn: hendelse.kategorinavn,
+            spørsmål: hendelse.spørsmål,
+            svarformat: hendelse.svarformat,
+            dokumentasjon: hendelse.dokumentasjon,
+            spørsmålId: hendelse.spørsmålId,
+        }
+
+        if (!ignorerteKatoerierListe.includes(hendelse.kategorinavn)) console.log(`📥 Mottok spørsmål: ${JSON.stringify(spm)}`)
+
+        return spm
+    } else {
+        return undefined
+    }
 }
 
 export const publiserSvar = async (spørsmål, svar) => {
+    const svr = {
+        kategorinavn: spørsmål.kategorinavn,
+        svar,
+        lagnavn: teamnavn,
+        spørsmålId: spørsmål.spørsmålId,
+        svarId: uuidv4(),
+        '@event_name': 'SVAR',
+        '@opprettet': `${format(new Date(), "yyyy-MM-dd")}T${format(new Date(), "HH:mm:ss")}`,
+    }
+
     await producer.send({
         topic,
         messages: [{
-            value: JSON.stringify({
-                svar,
-                '@event_name': 'SVAR',
-                '@opprettet': `${format(new Date(), "yyyy-MM-dd")}T${format(new Date(), "HH:mm:ss")}`,
-                spørsmålId: spørsmål.spørsmålId,
-                kategorinavn: spørsmål.kategorinavn,
-                lagnavn: teamnavn,
-                svarId: uuidv4()
-            })
+            value: JSON.stringify(svr)
         }]
     })
+
+    if (!ignorerteKatoerierListe.includes(spørsmål.kategorinavn)) console.log(`📤 Publisert svar: ${JSON.stringify(svr)}`)
+
 }
