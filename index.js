@@ -51,13 +51,13 @@ export const spørsmålFraHendelse = (hendelse) => {
         if (parsetHendelse['@event_name'] === 'SPØRSMÅL') {
             const spm = {
                 type: parsetHendelse['@event_name'],
-                kategorinavn: parsetHendelse.kategorinavn,
+                kategori: parsetHendelse.kategori,
                 spørsmål: parsetHendelse.spørsmål,
                 svarformat: parsetHendelse.svarformat,
                 dokumentasjon: parsetHendelse.dokumentasjon,
                 spørsmålId: parsetHendelse.spørsmålId,
             }
-            if (!ignorerteKatoerierListe.includes(spm.kategorinavn)) console.log(`📥 Mottok spørsmål: ${JSON.stringify(spm)}`)
+            if (!ignorerteKatoerierListe.includes(spm.kategori)) console.log(`📥 Mottok spørsmål: ${JSON.stringify(spm)}`)
 
             return spm
         } else {
@@ -70,7 +70,7 @@ export const spørsmålFraHendelse = (hendelse) => {
 
 export const publiserSvar = async (spørsmål, svar) => {
     const svr = {
-        kategorinavn: spørsmål.kategorinavn,
+        kategori: spørsmål.kategori,
         svar,
         lagnavn: teamnavn,
         spørsmålId: spørsmål.spørsmålId,
@@ -86,6 +86,6 @@ export const publiserSvar = async (spørsmål, svar) => {
         }]
     })
 
-    if (!ignorerteKatoerierListe.includes(spørsmål.kategorinavn)) console.log(`📤 Publisert svar: ${JSON.stringify(svr)}`)
+    if (!ignorerteKatoerierListe.includes(spørsmål.kategori)) console.log(`📤 Publisert svar: ${JSON.stringify(svr)}`)
 
 }

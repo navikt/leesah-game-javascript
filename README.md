@@ -73,9 +73,9 @@ async function kjør() {
                 const spørsmål = spørsmålFraHendelse(hendelse)
                 if (spørsmål) {
                     // ### FRA HER SPILLES LEESAH! ###
-                    if (spørsmål.kategorinavn === 'team-registration') {
+                    if (spørsmål.kategori === 'team-registration') {
                         await publiserSvar(spørsmål, HEXKODE)
-                    } else if (spørsmål.kategorinavn === 'ping-pong') {
+                    } else if (spørsmål.kategori === 'ping-pong') {
                         // Fortsett spillet nedover
                     }
                 }
