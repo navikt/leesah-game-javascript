@@ -130,3 +130,4 @@ dist
 .pnp.*
 
 leesah-certs.yaml
+.idea/
