@@ -58,7 +58,7 @@ Opprett filen `index.mjs` og lim inn koden nedenfor. OBS: husk at filtypen må v
 import { lastKafka, publiserSvar, spørsmålFraHendelse } from "@navikt/leesah-game";
 
 const ignorerteKategorier = [
-    // "team-registration"
+    // "lagregistrering"
 ]
 
 const LAGNAVN = "BYTT MEG";
@@ -73,7 +73,7 @@ async function kjør() {
                 const spørsmål = spørsmålFraHendelse(hendelse)
                 if (spørsmål) {
                     // ### FRA HER SPILLES LEESAH! ###
-                    if (spørsmål.kategori === 'team-registration') {
+                    if (spørsmål.kategori === 'lagregistrering') {
                         await publiserSvar(spørsmål, HEXKODE)
                     } else if (spørsmål.kategori === 'ping-pong') {
                         // Fortsett spillet nedover

@@ -1,5 +1,6 @@
 {
   "name": "@navikt/leesah-game",
+  "version": "1.0.18",
   "description": "JavaScript biblotek for å spille LEESAH!",
   "main": "index.js",
   "type": "module",
