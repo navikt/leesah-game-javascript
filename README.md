@@ -1,6 +1,6 @@
 # Leesah JavaScript
 
-Go [further down 🇬🇧☕️🍪🎩](#leesah-python-javascript) for the English documentation.
+Go [further down 🇬🇧☕️🍪🎩](#leesah-game-javascript) for the English documentation.
 
 > Leesah-game er et hendelsedrevet applikasjonsutviklingspill som utfordrer spillerne til å bygge en hendelsedrevet applikasjon. 
 > Applikasjonen håndterer forskjellige typer oppgaver som den mottar som hendelser på en Kafka-basert hendelsestrøm. 
