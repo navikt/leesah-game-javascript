@@ -104,7 +104,7 @@ node index.mjs
 > The application handles different types of tasks that it receives as events on a Kafka-based event stream.
 > The tasks vary from very simple to more complex.
 
-This is the Python library to play Leesah!
+This is the JavaScript library to play Leesah!
 
 ## Getting started
 
