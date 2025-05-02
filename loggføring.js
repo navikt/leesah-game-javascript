@@ -1,3 +1,5 @@
+import { kategoriPåEngelsk } from "./oversetting"
+
 export const loggMottattSpørsmål = (spørsmål) => {
     console.log(`📥 Mottok spørsmål: ${JSON.stringify({
         kategori: spørsmål.kategori,
@@ -10,11 +12,11 @@ export const loggMottattSpørsmål = (spørsmål) => {
 
 export const logRecievedQuestion = (question) => {
     console.log(`📥 Recieved question: ${JSON.stringify({
-        category: kategoriPaaEngelsk(question.kategori),
-        question: question.spørsmål,
-        answerFormat: question.svarformat,
+        category: question.category,
+        question: question.question,
+        answerFormat: question.answerFormat,
         documentation: question.documentation,
-        questionId: question.spørsmålId
+        questionId: question.questionId
     })}`)
 }
 
@@ -30,7 +32,7 @@ export const loggPubliseringAvSvar = (svar) => {
 
 export const logPublishingOfAnswer = (answer) => {
     console.log(`📤 Published answer: ${JSON.stringify({
-        category: kategoriPaaEngelsk(answer.kategori),
+        category: kategoriPåEngelsk(answer.kategori),
         answer: answer.svar,
         teamName: answer.lagnavn,
         questionId: answer.questionId,
@@ -38,25 +40,3 @@ export const logPublishingOfAnswer = (answer) => {
     })}`)
 }
 
-const kategoriPaaEngelsk = (kategori) => {
-    switch (kategori) {
-        case "lagregistrering":
-            return "team-registration"
-        case "ordsøk":
-            return "word-search"
-        case "aritmetikk":
-            return "arithmetic"
-        case "bankkonto":
-            return "bank-account"
-        case "primtall":
-            return "prime-numbers"
-        case "grunnbeløp":
-            return "basic-amount"
-        case "kalkulator":
-            return "calculator"
-        case "deduplisering":
-            return "deduplication"
-        default:
-            return kategori
-    }
-}

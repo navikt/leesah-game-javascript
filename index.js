@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from 'uuid'
 import fs from "fs"
 import YAML from 'yaml'
 import { Kafka } from 'kafkajs'
-import { format, } from 'date-fns'
 import { loggMottattSpørsmål, loggPubliseringAvSvar, logPublishingOfAnswer, logRecievedQuestion } from './loggføring'
+import { hendelseTypePåEngelsk, kategoriPåEngelsk, spørsmålPåEngelsk, svarformatPåEngelsk } from './oversetting'
 
 let producer
 let teamnavn
@@ -65,9 +65,9 @@ export const loadKafka = async (teamName, ignoredCategories) => {
 export const spørsmålFraHendelse = (hendelse) => {
     if (hendelse.value) {
         const parsetHendelse = JSON.parse(hendelse.value?.toString())
-        if (parsetHendelse['@event_name'] === 'SPØRSMÅL') {
+        if (parsetHendelse.type === 'SPØRSMÅL') {
             const spm = {
-                type: parsetHendelse['@event_name'],
+                type: parsetHendelse.type,
                 kategori: parsetHendelse.kategori,
                 spørsmål: parsetHendelse.spørsmål,
                 svarformat: parsetHendelse.svarformat,
@@ -90,18 +90,21 @@ export const spørsmålFraHendelse = (hendelse) => {
 export const questionFromEvent = (event) => {
     if (event.value) {
         const parsedEvent = JSON.parse(event.value?.toString())
-        if (parsedEvent['@event_name'] === 'SPØRSMÅL') {
+
+        if (parsedEvent.type === 'SPØRSMÅL') {
             const question = {
-                type: parsedEvent['@event_name'],
-                kategori: parsedEvent.kategori,
-                spørsmål: parsedEvent.spørsmål,
-                svarformat: parsedEvent.svarformat,
-                dokumentasjon: parsedEvent.dokumentasjon,
-                spørsmålId: parsedEvent.spørsmålId,
+                type: hendelseTypePåEngelsk(parsedEvent.type),
+                category: kategoriPåEngelsk(parsedEvent.kategori.toString()),
+                question: spørsmålPåEngelsk(parsedEvent),
+                answerFormat: svarformatPåEngelsk(parsedEvent.kategori),
+                documentation: `https://leesah.io/en/tasks/${kategoriPåEngelsk(parsedEvent.kategori)}`,
+                questionId: parsedEvent.spørsmålId,
             }
             if (!ignorerteKategorierListe.includes(question.kategori)) {
                 logRecievedQuestion(question)
             }
+
+            return question
         } else {
             return undefined
         }
