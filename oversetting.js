@@ -40,6 +40,37 @@ export const kategoriPåEngelsk = (kategori) => {
     }
 }
 
+export const kategoriFraEngelskTilNorsk = (category) => {
+    switch (category) {
+        case "team-registration":
+            return "lagregistrering"
+        case "arithmetic":
+            return "aritmetikk"
+        case "base64":
+            return "base64"
+        case "basic-amount":
+            return "grunnbeløp"
+        case "calculator":
+            return "kalkulator"
+        case "min-max":
+            return "min-max"
+        case "nav":
+            return "nav"
+        case "word-search":
+            return "ordsøk"
+        case "deduplication":
+            return "deduplisering"
+        case "bank-account":
+            return "bankkonto"
+        case "prime-numbers":
+            return "primtall"
+        case "ping-pong":
+            return "ping-pong"
+        default:
+            return category
+    }
+}
+
 export const spørsmålPåEngelsk = (spørsmål) => {
     switch (spørsmål.kategori) {
         case "lagregistrering":

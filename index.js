@@ -3,7 +3,7 @@ import fs from "fs"
 import YAML from 'yaml'
 import { Kafka } from 'kafkajs'
 import { loggMottattSpørsmål, loggPubliseringAvSvar, logPublishingOfAnswer, logRecievedQuestion } from './loggføring'
-import { hendelseTypePåEngelsk, kategoriPåEngelsk, spørsmålPåEngelsk, svarformatPåEngelsk } from './oversetting'
+import { hendelseTypePåEngelsk, kategoriPåEngelsk, spørsmålPåEngelsk, svarformatPåEngelsk, kategoriFraEngelskTilNorsk } from './oversetting'
 
 let producer
 let teamnavn
@@ -114,16 +114,9 @@ export const questionFromEvent = (event) => {
 }
 
 export const publishAnswer = async (question, answer) => {
-    const svarId = uuidv4()
+    const answerId = uuidv4()
 
-    const ans = {
-        type: 'SVAR',
-        kategori: question.category,
-        svar: answer,
-        lagnavn: teamnavn,
-        spørsmålId: question.questionId,
-        svarId,
-    }
+    const ans = createAnswerObject(question, answer, answerId, teamnavn)
 
     await producer.send({
         topic,
@@ -139,8 +132,19 @@ export const publishAnswer = async (question, answer) => {
             answer,
             teamName: teamnavn,
             questionId: question.questionId,
-            answerId: svarId,
+            answerId,
         })
+    }
+}
+
+export const createAnswerObject = (question, answer, answerId, teamName) => {
+    return {
+        type: 'SVAR',
+        kategori: kategoriFraEngelskTilNorsk(question.category),
+        svar: answer,
+        lagnavn: teamName,
+        spørsmålId: question.questionId,
+        svarId: answerId
     }
 }
 
