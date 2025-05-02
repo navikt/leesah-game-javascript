@@ -114,13 +114,15 @@ export const questionFromEvent = (event) => {
 }
 
 export const publishAnswer = async (question, answer) => {
+    const svarId = uuidv4()
+
     const ans = {
-        kategori: question.kategori,
+        type: 'SVAR',
+        kategori: question.category,
         svar: answer,
         lagnavn: teamnavn,
-        spørsmålId: question.spørsmålId,
-        svarId: uuidv4(),
-        '@event_name': 'SVAR',
+        spørsmålId: question.questionId,
+        svarId,
     }
 
     await producer.send({
@@ -130,20 +132,22 @@ export const publishAnswer = async (question, answer) => {
         }]
     })
 
-    if (!ignorerteKategorierListe.includes(spørsmål.kategori)) {
-        logPublishingOfAnswer(ans)
+    if (!ignorerteKategorierListe.includes(ans.kategori)) {
+        logPublishingOfAnswer({
+            type: 'ANSWER',
+            category: question.category,
+            answer,
+            teamName: teamnavn,
+            questionId: question.questionId,
+            answerId: svarId,
+        })
     }
 }
 
 export const publiserSvar = async (spørsmål, svar) => {
-    const svr = {
-        kategori: spørsmål.kategori,
-        svar,
-        lagnavn: teamnavn,
-        spørsmålId: spørsmål.spørsmålId,
-        svarId: uuidv4(),
-        '@event_name': 'SVAR',
-    }
+    const svarId = uuidv4()
+
+    const svr = lagSvarObjekt(spørsmål, svar, svarId)
 
     await producer.send({
         topic,
@@ -154,5 +158,16 @@ export const publiserSvar = async (spørsmål, svar) => {
 
     if (!ignorerteKategorierListe.includes(spørsmål.kategori)) {
         loggPubliseringAvSvar(svr)
+    }
+}
+
+export const lagSvarObjekt = (spørsmål, svar, svarId, teamnavn) => {
+    return {
+        type: 'SVAR',
+        kategori: spørsmål.kategori,
+        svar,
+        lagnavn: teamnavn,
+        spørsmålId: spørsmål.spørsmålId,
+        svarId,
     }
 }
