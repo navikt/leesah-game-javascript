@@ -62,7 +62,7 @@ export const kategoriFraEngelskTilNorsk = (category) => {
             return "deduplisering"
         case "bank-account":
             return "bankkonto"
-        case "prime-numbers":
+        case "prime-number":
             return "primtall"
         case "ping-pong":
             return "ping-pong"
