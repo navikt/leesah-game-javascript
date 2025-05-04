@@ -32,7 +32,7 @@ export const kategoriPåEngelsk = (kategori) => {
         case "bankkonto":
             return "bank-account"
         case "primtall":
-            return "prime-numbers"
+            return "prime-number"
         case "ping-pong":
             return "ping-pong"
         default:
@@ -143,11 +143,11 @@ const bankkontoSpørsmålPåEngelsk = (bankkontoSpørsmål) => {
 
 const grunnbeløpSpørsmålPåEngelsk = (grunnebløpSpørsmål) => {
     const splittetString = grunnebløpSpørsmål.split(" ")
-    return `Basic amount for date ${splittetString[4]}`
+    return `Basic amount for date ${splittetString[3]}`
 }
 
 const minMaxSpørsmålPåEngelsk = (minMaxSpørsmål) => {
-    const splittetString = grunnebløpSpørsmål.split("[")
+    const splittetString = minMaxSpørsmål.split("[")
     if (splittetString[0].includes("HØYESTE")) return `HIGHEST number in [${splittetString[1]}`
     if (splittetString[0].includes("LAVESTE")) return `LOWEST number in [${splittetString[1]}`
 }
@@ -159,5 +159,6 @@ const navSpørsmålPåEngelsk = (navSpørsmål) => {
     else if (navSpørsmål.includes("direktoratet sitt hovedkontor")) return "Where is the offices of the Nav directoate located?"
     else if (navSpørsmål.includes("designsystemet")) return "What is the name of Nav's design system?"
     else if (navSpørsmål.includes("1G")) return "As of 1. may 2024, how much is 1G?"
+    else if (navSpørsmål.includes("syke")) return "Which Nav benefit are workers who are unable to work due to illness most likely to receive?"
     else return ""
 }

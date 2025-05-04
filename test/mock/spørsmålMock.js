@@ -58,6 +58,78 @@ export const spørsmålMock = {
                 "question": "Choose a hex code of at least 6 characters to represent your team. Example: #FFFFFF",
                 "answerFormat": "Hex code as string",
                 "documentation": "https://leesah.io/en/tasks/team-registration"
+            },
+            aritmetikk: {
+                "type": "QUESTION",
+                "questionId": "d6bf9318-9ce2-4393-a526-2761a982d967",
+                "category": "arithmetic",
+                "question": "49 - 62",
+                "answerFormat": "Answer must be rounded to a integer, but sent as an string",
+                "documentation": "https://leesah.io/en/tasks/arithmetic"
+            },
+            base64: {
+                "type": "QUESTION",
+                "questionId": "a8976013-d6d9-4e27-a931-25a209fc5ec8",
+                "category": "base64",
+                "question": "TEVFU0FI",
+                "answerFormat": "Decrypted string",
+                "documentation": "https://leesah.io/en/tasks/base64"
+            },
+            grunnbeløp: {
+                "type": "QUESTION",
+                "questionId": "b2fa21ec-bc8e-4a4a-895e-e520ea2730ec",
+                "category": "basic-amount",
+                "question": "Basic amount for date 1967-07-14",
+                "answerFormat": "Number as string",
+                "documentation": "https://leesah.io/en/tasks/basic-amount"
+            },
+            minMax: {
+                "type": "QUESTION",
+                "questionId": "ba2e8705-7667-496d-8250-20fb3f400592",
+                "category": "min-max",
+                "question": "HIGHEST number in [25, 66, 12, 3, 53, 54, 94, 67, 23, 55, 41, 30, 40, 50, 60, 70, 80, 10, 11, 1]",
+                "answerFormat": "Number as string",
+                "documentation": "https://leesah.io/en/tasks/min-max"
+            },
+            nav: {
+                "type": "QUESTION",
+                "questionId": "535298f8-d305-4325-8851-a9281776e6b6",
+                "category": "nav",
+                "question": "Which Nav benefit are workers who are unable to work due to illness most likely to receive?",
+                "answerFormat": "String",
+                "documentation": "https://leesah.io/en/tasks/nav"
+            },
+            pingPong: {
+                "type": "QUESTION",
+                "questionId": "bc834c65-01d0-4aaf-8d13-443cc0561504",
+                "category": "ping-pong",
+                "question": "ping",
+                "answerFormat": "String",
+                "documentation": "https://leesah.io/en/tasks/ping-pong"
+            },
+            primtall: {
+                "type": "QUESTION",
+                "questionId": "8f0df84d-e762-4c02-81ee-73185bde3cf7",
+                "category": "prime-number",
+                "question": "7",
+                "answerFormat": "true or false as string",
+                "documentation": "https://leesah.io/en/tasks/prime-number"
+            },
+            deduplisering: {
+                "type": "QUESTION",
+                "questionId": "2b88ead2-2494-4196-a94e-200b8f0d80ea",
+                "category": "deduplication",
+                "question": "Answer only one question in this category with <You shall not fool me!>",
+                "answerFormat": "String",
+                "documentation": "https://leesah.io/en/tasks/deduplication"
+            },
+            bankkonto: {
+                "type": "QUESTION",
+                "questionId": "64fd8a81-cab2-421d-a2e9-9874c4a375e7",
+                "category": "bank-account",
+                "question": "WITHDRAWAL: 6764",
+                "answerFormat": "Number as string",
+                "documentation": "https://leesah.io/en/tasks/bank-account"
             }
         }
     }
