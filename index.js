@@ -151,7 +151,7 @@ export const createAnswerObject = (question, answer, answerId, teamName) => {
 export const publiserSvar = async (spørsmål, svar) => {
     const svarId = uuidv4()
 
-    const svr = lagSvarObjekt(spørsmål, svar, svarId)
+    const svr = lagSvarObjekt(spørsmål, svar, svarId, teamnavn)
 
     await producer.send({
         topic,
