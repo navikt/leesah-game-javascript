@@ -1,5 +1,3 @@
-import { kategoriPåEngelsk } from "./oversetting"
-
 export const loggMottattSpørsmål = (spørsmål) => {
     console.log(`📥 Mottok spørsmål: ${JSON.stringify({
         kategori: spørsmål.kategori,
@@ -32,11 +30,11 @@ export const loggPubliseringAvSvar = (svar) => {
 
 export const logPublishingOfAnswer = (answer) => {
     console.log(`📤 Published answer: ${JSON.stringify({
-        category: kategoriPåEngelsk(answer.kategori),
-        answer: answer.svar,
-        teamName: answer.lagnavn,
+        category: answer.category,
+        answer: answer.answer,
+        teamName: answer.teamName,
         questionId: answer.questionId,
-        answerId: answer.svarId
+        answerId: answer.answerId
     })}`)
 }
 

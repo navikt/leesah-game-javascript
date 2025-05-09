@@ -2,8 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import fs from "fs"
 import YAML from 'yaml'
 import { Kafka } from 'kafkajs'
-import { loggMottattSpørsmål, loggPubliseringAvSvar, logPublishingOfAnswer, logRecievedQuestion } from './loggføring'
-import { hendelseTypePåEngelsk, kategoriPåEngelsk, spørsmålPåEngelsk, svarformatPåEngelsk, kategoriFraEngelskTilNorsk } from './oversetting'
+import { loggMottattSpørsmål, loggPubliseringAvSvar, logPublishingOfAnswer, logRecievedQuestion } from './loggføring.js'
 
 let producer
 let teamnavn
@@ -93,11 +92,11 @@ export const questionFromEvent = (event) => {
 
         if (parsedEvent.type === 'SPØRSMÅL') {
             const question = {
-                type: hendelseTypePåEngelsk(parsedEvent.type),
-                category: kategoriPåEngelsk(parsedEvent.kategori.toString()),
-                question: spørsmålPåEngelsk(parsedEvent),
-                answerFormat: svarformatPåEngelsk(parsedEvent.kategori),
-                documentation: `https://leesah.io/en/tasks/${kategoriPåEngelsk(parsedEvent.kategori)}`,
+                type: parsedEvent.type,
+                category: parsedEvent.kategori,
+                question: parsedEvent.spørsmål,
+                answerFormat: parsedEvent.svarformat,
+                documentation: parsedEvent.dokumentasjon,
                 questionId: parsedEvent.spørsmålId,
             }
             if (!ignorerteKategorierListe.includes(question.kategori)) {
@@ -125,7 +124,7 @@ export const publishAnswer = async (question, answer) => {
         }]
     })
 
-    if (!ignorerteKategorierListe.includes(ans.kategori)) {
+    if (!ignorerteKategorierListe.includes(ans.category)) {
         logPublishingOfAnswer({
             type: 'ANSWER',
             category: question.category,
@@ -139,8 +138,9 @@ export const publishAnswer = async (question, answer) => {
 
 export const createAnswerObject = (question, answer, answerId, teamName) => {
     return {
+        "@event_name": "SVAR",
         type: 'SVAR',
-        kategori: kategoriFraEngelskTilNorsk(question.category),
+        kategori: question.category,
         svar: answer,
         lagnavn: teamName,
         spørsmålId: question.questionId,
@@ -167,6 +167,7 @@ export const publiserSvar = async (spørsmål, svar) => {
 
 export const lagSvarObjekt = (spørsmål, svar, svarId, teamnavn) => {
     return {
+        "@event_name": "SVAR",
         type: 'SVAR',
         kategori: spørsmål.kategori,
         svar,
