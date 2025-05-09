@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from 'uuid'
 import fs from "fs"
 import YAML from 'yaml'
 import { Kafka } from 'kafkajs'
-import { loggMottattSpørsmål, loggPubliseringAvSvar, logPublishingOfAnswer, logRecievedQuestion } from './loggføring.js'
 
 let producer
 let teamnavn
@@ -175,4 +174,45 @@ export const lagSvarObjekt = (spørsmål, svar, svarId, teamnavn) => {
         spørsmålId: spørsmål.spørsmålId,
         svarId,
     }
+}
+
+
+const loggMottattSpørsmål = (spørsmål) => {
+    console.log(`📥 Mottok spørsmål: ${JSON.stringify({
+        kategori: spørsmål.kategori,
+        spørsmål: spørsmål.spørsmål,
+        svarformat: spørsmål.svarformat,
+        dokumentasjon: spørsmål.dokumentasjon,
+        spørsmålId: spørsmål.spørsmålId,
+    })}`)
+}
+
+const logRecievedQuestion = (question) => {
+    console.log(`📥 Recieved question: ${JSON.stringify({
+        category: question.category,
+        question: question.question,
+        answerFormat: question.answerFormat,
+        documentation: question.documentation,
+        questionId: question.questionId
+    })}`)
+}
+
+const loggPubliseringAvSvar = (svar) => {
+    console.log(`📤 Publisert svar: ${JSON.stringify({
+        kategori: svar.kategori,
+        svar: svar.svar,
+        lagnavn: svar.lagnavn,
+        spørsmålId: svar.spørsmålId,
+        svarId: svar.svarId
+    })}`)
+}
+
+const logPublishingOfAnswer = (answer) => {
+    console.log(`📤 Published answer: ${JSON.stringify({
+        category: answer.category,
+        answer: answer.answer,
+        teamName: answer.teamName,
+        questionId: answer.questionId,
+        answerId: answer.answerId
+    })}`)
 }
