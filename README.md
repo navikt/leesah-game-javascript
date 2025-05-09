@@ -159,14 +159,14 @@ Create a file named `index.mjs` and paste the code below. OBS: the file has to b
  * 3. Set your own 'HEX_CODE' as team color
 */
 
-import { loadKafka, publishAnswer, questionFromEvent } from "@navikt/leesah-game";
+import { loadKafka, publishAnswer, questionFromEvent } from "./index.js";
 
 const ignoredCategories = [
     // "team-registration"
 ]
 
-const TEAM_NAME = "CHANGE ME";
-const HEX_CODE = "CHANGE ME";
+const TEAM_NAME = "CHANGE_ME";
+const HEX_CODE = "CHANGE_ME";
 
 async function run() {
     try {
@@ -177,9 +177,9 @@ async function run() {
                 const question = questionFromEvent(event)
                 if (question) {
                     // ### FROM THIS POINT YOU PLAY LEESAH! ###
-                    if (question.kategori === 'team-registration') {
+                    if (question.category === 'team-registration') {
                         await publishAnswer(question, HEX_CODE)
-                    } else if (question.kategori === 'ping-pong') {
+                    } else if (question.category === 'ping-pong') {
                         // Continue the game below
                     }
                 }
