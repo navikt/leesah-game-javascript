@@ -98,7 +98,7 @@ export const questionFromEvent = (event) => {
                 documentation: parsedEvent.dokumentasjon,
                 questionId: parsedEvent.spørsmålId,
             }
-            if (!ignorerteKategorierListe.includes(question.kategori)) {
+            if (!ignorerteKategorierListe.includes(question.category)) {
                 logRecievedQuestion(question)
             }
 
@@ -123,7 +123,7 @@ export const publishAnswer = async (question, answer) => {
         }]
     })
 
-    if (!ignorerteKategorierListe.includes(ans.category)) {
+    if (!ignorerteKategorierListe.includes(question.category)) {
         logPublishingOfAnswer({
             type: 'ANSWER',
             category: question.category,
