@@ -1,5 +1,3 @@
-# Leesah JavaScript
-
 🇳🇴 Du finner den norske utgaven [lengre ned](#leesah-javascript-norsk).
 
 # Leesah JavaScript English
