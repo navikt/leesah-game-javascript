@@ -112,6 +112,9 @@ export const questionFromEvent = (event) => {
 }
 
 export const publishAnswer = async (question, answer) => {
+    if (ignorerteKategorierListe.includes(question.category)) {
+        return;
+    }
     const answerId = uuidv4()
 
     const ans = createAnswerObject(question, answer, answerId, teamnavn)
@@ -123,16 +126,14 @@ export const publishAnswer = async (question, answer) => {
         }]
     })
 
-    if (!ignorerteKategorierListe.includes(question.category)) {
-        logPublishingOfAnswer({
-            type: 'ANSWER',
-            category: question.category,
-            answer,
-            teamName: teamnavn,
-            questionId: question.questionId,
-            answerId,
-        })
-    }
+    logPublishingOfAnswer({
+        type: 'ANSWER',
+        category: question.category,
+        answer,
+        teamName: teamnavn,
+        questionId: question.questionId,
+        answerId,
+    })
 }
 
 export const createAnswerObject = (question, answer, answerId, teamName) => {
@@ -148,6 +149,10 @@ export const createAnswerObject = (question, answer, answerId, teamName) => {
 }
 
 export const publiserSvar = async (spørsmål, svar) => {
+    if (ignorerteKategorierListe.includes(spørsmål.kategori)) {
+        return;
+    }
+
     const svarId = uuidv4()
 
     const svr = lagSvarObjekt(spørsmål, svar, svarId, teamnavn)
@@ -159,9 +164,7 @@ export const publiserSvar = async (spørsmål, svar) => {
         }]
     })
 
-    if (!ignorerteKategorierListe.includes(spørsmål.kategori)) {
-        loggPubliseringAvSvar(svr)
-    }
+    loggPubliseringAvSvar(svr)
 }
 
 export const lagSvarObjekt = (spørsmål, svar, svarId, teamnavn) => {
