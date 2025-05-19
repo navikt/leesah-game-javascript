@@ -43,7 +43,7 @@ The username is always `leesah-game`, and the password will be distributed.
 
 On macOS/Linux you can also use the one-liner below:
 ```bash
-curl -u leesah-game:<se presentasjon> -o leesah-certs.zip https://leesah.io/certs && unzip leesah-certs.zip
+curl -u leesah-game:<see presentation> -o leesah-certs.zip https://leesah.io/certs && unzip leesah-certs.zip
 ```
 
 You will now end up with `leesah-certs.yaml` in the `leesah-game` directory you made earlier.
